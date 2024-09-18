@@ -1,7 +1,8 @@
 {
-  "name": "github-actions-nextjs-cyrpess-vercel",
+  "name": "github-actions-nextjs-cypress-vercel",
   "version": "0.1.0",
-  "private": true,
+  "author": "June Rockwell",
+  "private": false,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
