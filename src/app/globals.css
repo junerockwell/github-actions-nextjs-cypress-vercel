@@ -25,3 +25,12 @@ body {
     text-wrap: balance;
   }
 }
+
+.modal-action {
+  justify-content: flex-start;
+}
+
+.modal-action form {
+  display: flex;
+  flex-direction: column;
+}
