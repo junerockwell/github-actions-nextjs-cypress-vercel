@@ -1,14 +1,51 @@
 "use client";
 
 import { useState, useRef, useEffect, SyntheticEvent } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+import FormErrorText from "./FormErrorText/FormErrorText";
 
 type ModalFormType = {
   open: boolean;
   onClose: (submitted: boolean) => void;
 };
+
+enum CharacterSelectEnum {
+  Snoopy = "Snoopy",
+  HelloKitty = "Hello Kitty",
+  BugsBunny = "Bugs Bunny",
+}
+
+interface IFormInput {
+  name: string;
+  email: string;
+  description: string;
+  checkMe: boolean;
+  selectOne: CharacterSelectEnum;
+  switch: boolean;
+  topoChicoFlavor: string;
+}
+
 export default function ModalForm(props: ModalFormType) {
   const { open, onClose } = props;
   const modalRef = useRef<HTMLDialogElement>(null);
+  const {
+    register,
+    formState: { errors, isDirty, isValid },
+    reset,
+    handleSubmit,
+  } = useForm<IFormInput>({ mode: "all" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  function onSubmit(data: IFormInput): void | SubmitHandler<IFormInput> {
+    // e.target.reset();
+    setIsSubmitting(true);
+    setTimeout(() => {
+      reset();
+      console.log("onSubmit() ", data);
+      handleClose(true);
+      setIsSubmitting(false);
+    }, 1000);
+  }
 
   useEffect(() => {
     if (!modalRef.current) {
@@ -58,88 +95,179 @@ export default function ModalForm(props: ModalFormType) {
             </svg>
           </button>
         </header>
-        <p className="py-4">Press ESC key or click the button below to close</p>
-        <div className="modal-action">
-          <form method="dialog" className="w-full">
-            <input
-              type="text"
-              placeholder="Title"
-              className="input input-bordered w-full mb-4"
-            />
+        <p className="mb-4">Press ESC key or click the button below to close</p>
+        <div className="">
+          <form
+            method="dialog"
+            className="w-full"
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <div className="form-control mb-4">
+              <input
+                type="text"
+                placeholder="name"
+                className="input input-bordered w-full mb-2"
+                {...register("name", {
+                  required: true,
+                  minLength: 2,
+                  maxLength: 20,
+                })}
+              />
+              {errors.name && errors.name.type === "required" && (
+                <FormErrorText text="Name is required" />
+              )}
+              {errors.name && errors.name.type === "minLength" && (
+                <FormErrorText text="Min length is 2" />
+              )}
+              {errors.name && errors.name.type === "maxLength" && (
+                <FormErrorText text="Max length 20 exceeded" />
+              )}
+            </div>
+            <div className="form-control mb-4">
+              <input
+                type="email"
+                placeholder="username@domain.com"
+                className="input input-bordered w-full mb-2"
+                {...register("email", {
+                  required: true,
+                  pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i,
+                })}
+              />
+              {errors.email && <FormErrorText text="Email is required" />}
+            </div>
 
-            <textarea
-              className="textarea textarea-bordered mb-4"
-              placeholder="Message"
-            ></textarea>
+            <div className="form-control mb-3">
+              <textarea
+                className="textarea textarea-bordered w-full mb-2"
+                placeholder="Message"
+                {...register("description", {
+                  required: true,
+                  minLength: 3,
+                })}
+              ></textarea>
+              {errors.description && (
+                <FormErrorText text="Description is required" />
+              )}
+              {errors.description &&
+                errors.description.type === "minLength" && (
+                  <FormErrorText text="Min 3 chars long" />
+                )}
+            </div>
 
             <div className="form-control mb-4">
-              <label className="cursor-pointer label justify-start">
+              <label className="cursor-pointer label justify-start px-0">
                 <input
                   type="checkbox"
                   className="checkbox checkbox-info mr-2"
+                  {...register("checkMe")}
                 />
                 <span className="label-text">Check me!</span>
               </label>
             </div>
 
-            <select className="select select-bordered w-full mb-4">
-              <option disabled selected>
-                Who shot first?
-              </option>
-              <option>Han Solo</option>
-              <option>Greedo</option>
-            </select>
+            <div className="form-control mb-4">
+              <p className="mb-1">Who shot first?:</p>
+
+              <select
+                className="select select-bordered w-full mb-2"
+                defaultValue=""
+                {...register("selectOne", {
+                  required: true,
+                })}
+              >
+                <option value="" disabled>
+                  No character selected
+                </option>
+                <option value={`${CharacterSelectEnum.Snoopy}`}>
+                  {CharacterSelectEnum.Snoopy}
+                </option>
+                <option value={`${CharacterSelectEnum.HelloKitty}`}>
+                  {CharacterSelectEnum.HelloKitty}
+                </option>
+                <option value={`${CharacterSelectEnum.BugsBunny}`}>
+                  {CharacterSelectEnum.BugsBunny}
+                </option>
+              </select>
+              {errors.description &&
+                errors.description.type === "minLength" && (
+                  <FormErrorText text="Min 3 chars long" />
+                )}
+            </div>
 
             <div className="form-control mb-4">
-              <label className="label cursor-pointer justify-start">
-                <input type="checkbox" className="toggle mr-2" defaultChecked />
+              <label className="label cursor-pointer justify-start px-0">
+                <input
+                  type="checkbox"
+                  className="toggle toggle-warning mr-2"
+                  defaultChecked
+                  {...register("switch", {
+                    required: true,
+                  })}
+                />
                 <span className="label-text">Turn Off / On</span>
               </label>
+              {errors.switch && <FormErrorText text="Required" />}
             </div>
 
-            <div className="form-control">
-              <p>Which Topo Chico:</p>
-            </div>
-            <div className="form-control">
-              <label className="label cursor-pointer justify-start">
+            <div className="form-control mb-4">
+              <p>
+                Which Topo Chico:<span className="required-mark">*</span>
+              </p>
+              <label className="label cursor-pointer justify-start px-0">
                 <input
                   type="radio"
-                  name="radio-10"
                   className="radio checked:bg-red-500 mr-2"
-                  defaultChecked
+                  // defaultChecked
+                  value="regular"
+                  {...register("topoChicoFlavor", {
+                    required: true,
+                  })}
                 />
                 <span className="label-text">Regular</span>
               </label>
-            </div>
-            <div className="form-control">
-              <label className="label cursor-pointer justify-start">
+
+              <label className="label cursor-pointer justify-start px-0">
                 <input
                   type="radio"
-                  name="radio-10"
-                  className="radio checked:bg-blue-500 mr-2"
-                  defaultChecked
+                  className="radio checked:bg-green-500 mr-2"
+                  value="lime"
+                  {...register("topoChicoFlavor", {
+                    required: true,
+                  })}
                 />
                 <span className="label-text">Lime</span>
               </label>
-            </div>
-            <div className="form-control mb-4">
-              <label className="label cursor-pointer justify-start">
+
+              <label className="label cursor-pointer justify-start px-0">
                 <input
                   type="radio"
-                  name="radio-10"
                   className="radio checked:bg-blue-500 mr-2"
-                  defaultChecked
+                  value="blueberry"
+                  {...register("topoChicoFlavor", {
+                    required: true,
+                  })}
                 />
                 <span className="label-text">Blueberry</span>
               </label>
+
+              {errors.topoChicoFlavor && <FormErrorText text="Required" />}
             </div>
 
             <button
               type="submit"
-              className="btn btn-primary"
-              onClick={() => handleClose(true)}
+              className={`btn btn-primary w-full ${
+                isSubmitting ? "btn-submitting" : ""
+              }`}
+              disabled={!isDirty || !isValid || isSubmitting}
             >
-              Enter
+              {isSubmitting ? (
+                <span>
+                  Submitting
+                  <span className="ml-1 loading loading-dots loading-xs"></span>
+                </span>
+              ) : (
+                "Submit"
+              )}
             </button>
           </form>
         </div>

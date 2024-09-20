@@ -26,11 +26,22 @@ body {
   }
 }
 
-.modal-action {
+/* .modal-action {
   justify-content: flex-start;
 }
 
 .modal-action form {
   display: flex;
   flex-direction: column;
+} */
+
+.form-control .required-mark {
+  color: red;
+  margin-left: 0.15rem;
+}
+
+.btn.btn-disabled.btn-submitting,
+.btn[disabled].btn-submitting,
+.btn:disabled.btn.btn-disabled.btn-submitting {
+  background-color: #d1dbff;
 }
