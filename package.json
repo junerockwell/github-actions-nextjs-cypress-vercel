@@ -7,7 +7,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "cy:open": "npx cypress open"
   },
   "dependencies": {
     "dayjs": "^1.11.13",
@@ -22,6 +23,7 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/uuid": "^10.0.0",
+    "cypress": "^13.14.2",
     "daisyui": "^4.12.10",
     "eslint": "^8",
     "eslint-config-next": "14.2.11",
