@@ -1,19 +1,19 @@
 "use client";
-import dayjs from "dayjs";
+// import dayjs from "dayjs";
 
 type AlertType = {
+  text: string;
+  className: string;
   show: boolean;
   onClose: () => void;
 };
 
 export default function Alert(props: AlertType) {
-  const { show, onClose } = props;
-
-  const dateTime = dayjs().format("MM/DD/YYYY h:mm a");
+  const { text, className, show, onClose } = props;
 
   if (!show) return null;
   return (
-    <div role="alert" className="alert alert-success">
+    <div role="alert" className={`alert alert-success ${className}`}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         className="h-6 w-6 shrink-0 stroke-current"
@@ -27,7 +27,7 @@ export default function Alert(props: AlertType) {
           d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
         />
       </svg>
-      <span>You submitted the form on {dateTime}!</span>
+      <span>{text}</span>
       <button className="btn btn-sm btn-circle" onClick={onClose}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
