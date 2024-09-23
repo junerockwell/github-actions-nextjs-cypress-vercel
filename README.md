@@ -26,17 +26,29 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 npm run lint
 ```
 
-## Run Cypress E2E Tests (WIP)
+## Run Cypress E2E Tests
+
+The following command, opens up the Cypress app that shows the visual end-to-end testing. You are prompted to choose where the visual test can run. I personally choose Electron.
 
 ```bash
-npm run e2e
+npm run cy:open
 ```
+
+The following command runs the e2e test on the terminal only.
+
+```bash
+npm run cy:run
+```
+
+None of these commands will be used in the GitHub actions if `cypress-io/github-action@v6` is used because `cypress-io/github-action@v6` does it for you.
 
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Add this project in Vercel
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Import this repo in Vercel.
+
+###
 
 ## Setup Cypress
 
@@ -78,6 +90,8 @@ So the file would look like:
 }
 ```
 
+By default, NextJS with Typescript has a `tsconfig.json` file in the root of the project. But the `cypress` folder also needs one inside it.
+
 ### Add a `global.d.ts` inside the `cypress` folder
 
 ```
@@ -103,6 +117,8 @@ declare namespace Cypress {
   }
 }
 ```
+
+Add types in this file. One of them in this example is the most commonly used `getBySel` custom function.
 
 ### Add `.getBySel()` custom command
 
@@ -152,4 +168,6 @@ export default defineConfig({
 });
 ```
 
-### All E2E test files should be `**.spec.ts`
+### The E2E Test files
+
+All E2E test files should be `**.spec.ts`. For example, the tests for the homepage should be `homepage.spec.ts` inside the `/cypress/e2e` folder.
