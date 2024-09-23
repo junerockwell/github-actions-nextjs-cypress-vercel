@@ -71,6 +71,7 @@ export default function ModalForm(props: ModalFormType) {
       id="modal-with-form"
       className="modal"
       onCancel={handleESC}
+      data-test="modal-with-form"
     >
       <div className="modal-box">
         <header className="flex justify-between mb-5">
@@ -78,6 +79,7 @@ export default function ModalForm(props: ModalFormType) {
           <button
             className="btn btn-sm btn-circle btn-outline"
             onClick={() => handleClose(false)}
+            data-test="close-modal-button"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -112,15 +114,25 @@ export default function ModalForm(props: ModalFormType) {
                   minLength: 2,
                   maxLength: 20,
                 })}
+                data-test="name-field"
               />
               {errors.name && errors.name.type === "required" && (
-                <FormErrorText text="Name is required" />
+                <FormErrorText
+                  text="Name is required"
+                  cypressId="name-field-required-error"
+                />
               )}
               {errors.name && errors.name.type === "minLength" && (
-                <FormErrorText text="Min length is 2" />
+                <FormErrorText
+                  text="Min length is 2"
+                  cypressId="name-field-minlen-error"
+                />
               )}
               {errors.name && errors.name.type === "maxLength" && (
-                <FormErrorText text="Max length 20 exceeded" />
+                <FormErrorText
+                  text="Max length 20 exceeded"
+                  cypressId="name-field-maxlen-error"
+                />
               )}
             </div>
             <div className="form-control mb-4">
@@ -132,8 +144,14 @@ export default function ModalForm(props: ModalFormType) {
                   required: true,
                   pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i,
                 })}
+                data-test="email-field"
               />
-              {errors.email && <FormErrorText text="Email is required" />}
+              {errors.email && (
+                <FormErrorText
+                  text="Email is required"
+                  cypressId="email-field-error"
+                />
+              )}
             </div>
 
             <div className="form-control mb-3">

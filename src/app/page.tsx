@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import Alert from "./components/Alert";
-import ModalForm from "./components/ModalForm";
+import Alert from "@/components/Alert";
+import ModalForm from "@/components/ModalForm";
 import dayjs from "dayjs";
 import { v4 as uuidv4 } from "uuid";
 
@@ -36,6 +36,7 @@ export default function Home() {
       <button
         className="btn btn-primary w-6/12 self-center mb-10"
         onClick={() => setOpenModalForm(true)}
+        data-test="launch-modal"
       >
         Launch Modal
       </button>
