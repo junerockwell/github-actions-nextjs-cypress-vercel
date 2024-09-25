@@ -19,7 +19,7 @@ describe("Modal Form", () => {
     cy.visit("/");
     cy.getBySel("launch-modal").click();
     cy.getBySel("modal-with-form").should("be.visible");
-    cy.wait(3000);
+    cy.wait(1000);
     cy.getBySel("close-modal-button").click();
     cy.get("modal-with-form").should("not.exist");
   });
