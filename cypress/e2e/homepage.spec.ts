@@ -10,6 +10,6 @@ describe("Home Page", () => {
   it("opens the modal with form", () => {
     cy.visit("/");
     cy.getBySel("launch-modal").click();
-    cy.getBySel("new-task-modal").should("be.visible");
+    cy.getBySel("modal-with-form").should("be.visible");
   });
 });
