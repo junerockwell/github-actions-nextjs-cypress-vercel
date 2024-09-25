@@ -247,7 +247,10 @@ export default function ModalForm(props: ModalFormType) {
             </div>
 
             <div className="form-control mb-4">
-              <label className="label cursor-pointer justify-start px-0">
+              <label
+                className="label cursor-pointer justify-start px-0"
+                data-test="switch-field"
+              >
                 <input
                   type="checkbox"
                   className="toggle toggle-warning mr-2"
@@ -258,7 +261,12 @@ export default function ModalForm(props: ModalFormType) {
                 />
                 <span className="label-text">Turn Off / On</span>
               </label>
-              {errors.switch && <FormErrorText text="Required" />}
+              {errors.switch && (
+                <FormErrorText
+                  text="This switch must be turned on!"
+                  cypressId="switch-field-required-error"
+                />
+              )}
             </div>
 
             <div className="form-control mb-4">

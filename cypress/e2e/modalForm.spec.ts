@@ -157,4 +157,14 @@ describe("Modal Form", () => {
     cy.getBySel("switch-field").find("input").uncheck();
     cy.wait(1000);
   });
+
+  it("unchedks switch field renders error message", () => {
+    cy.visit("/");
+    cy.getBySel("launch-modal").click();
+    cy.getBySel("modal-with-form").should("be.visible");
+    cy.getBySel("switch-field").find("input").uncheck();
+    cy.getBySel("switch-field-required-error")
+      .should("be.visible")
+      .and("have.text", "This switch must be turned on!");
+  });
 });
