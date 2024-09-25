@@ -225,7 +225,7 @@ export default function ModalForm(props: ModalFormType) {
               <select
                 multiple
                 className="select select-bordered w-full mb-2"
-                defaultValue=""
+                defaultValue={[]}
                 data-test="selectMore-field"
                 {...register("selectMore", {
                   required: true,
