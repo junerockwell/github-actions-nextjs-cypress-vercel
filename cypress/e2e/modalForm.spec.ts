@@ -31,6 +31,17 @@ describe("Modal Form", () => {
     cy.getBySel("name-field").type("John Smith");
   });
 
+  it("shows name error required", () => {
+    cy.visit("/");
+    cy.getBySel("launch-modal").click();
+    cy.getBySel("modal-with-form").should("be.visible");
+    cy.getBySel("name-field").focus().blur();
+    // cy.getBySel("email-field");
+    cy.getBySel("name-field-required-error")
+      .should("be.visible")
+      .and("have.text", "Name is required");
+  });
+
   it("can type an email", () => {
     cy.visit("/");
     cy.getBySel("launch-modal").click();
