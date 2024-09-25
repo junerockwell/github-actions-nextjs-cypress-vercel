@@ -173,7 +173,10 @@ export default function ModalForm(props: ModalFormType) {
             </div>
 
             <div className="form-control mb-4">
-              <label className="cursor-pointer label justify-start px-0">
+              <label
+                className="cursor-pointer label justify-start px-0"
+                data-test="checkMe-field"
+              >
                 <input
                   type="checkbox"
                   className="checkbox checkbox-info mr-2"

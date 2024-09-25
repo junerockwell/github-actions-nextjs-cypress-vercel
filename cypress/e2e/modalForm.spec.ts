@@ -71,4 +71,19 @@ describe("Modal Form", () => {
       .should("be.visible")
       .and("have.text", "Email is required");
   });
+
+  // Add other email field tests here
+
+  // Add textarea field tests here
+
+  it("checks the checkbox", () => {
+    cy.visit("/");
+    cy.getBySel("launch-modal").click();
+    cy.getBySel("modal-with-form").should("be.visible");
+    // Chaining .find() if data-test is on the parent of the input[type=checkbox]
+    cy.getBySel("checkMe-field").find("input").check({ force: true });
+    // Directly use .check() without .find() if data-test is on the actual input[type=checkbox]
+    // cy.getBySel("checkMe-field").check({ force: true });
+    cy.wait(1000);
+  });
 });
