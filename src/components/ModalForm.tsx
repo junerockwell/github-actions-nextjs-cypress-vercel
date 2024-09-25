@@ -9,7 +9,7 @@ type ModalFormType = {
   onClose: (submitted: boolean) => void;
 };
 
-enum CharacterSelectEnum {
+export enum CharacterSelectEnum {
   Snoopy = "Snoopy",
   HelloKitty = "Hello Kitty",
   BugsBunny = "Bugs Bunny",
@@ -21,6 +21,7 @@ interface IFormInput {
   description: string;
   checkMe: boolean;
   selectOne: CharacterSelectEnum;
+  selectMore: CharacterSelectEnum;
   switch: boolean;
   topoChicoFlavor: string;
 }
@@ -193,11 +194,12 @@ export default function ModalForm(props: ModalFormType) {
             </div>
 
             <div className="form-control mb-4">
-              <p className="mb-1">Who shot first?:</p>
+              <p className="mb-1">Choose a character:</p>
 
               <select
                 className="select select-bordered w-full mb-2"
                 defaultValue=""
+                data-test="selectOne-field"
                 {...register("selectOne", {
                   required: true,
                 })}
@@ -215,10 +217,33 @@ export default function ModalForm(props: ModalFormType) {
                   {CharacterSelectEnum.BugsBunny}
                 </option>
               </select>
-              {errors.description &&
-                errors.description.type === "minLength" && (
-                  <FormErrorText text="Min 3 chars long" />
-                )}
+            </div>
+
+            <div className="form-control mb-4">
+              <p className="mb-1">Choose Multiple:</p>
+
+              <select
+                multiple
+                className="select select-bordered w-full mb-2"
+                defaultValue=""
+                data-test="selectMore-field"
+                {...register("selectMore", {
+                  required: true,
+                })}
+              >
+                <option value="" disabled>
+                  No character selected
+                </option>
+                <option value={`${CharacterSelectEnum.Snoopy}`}>
+                  {CharacterSelectEnum.Snoopy}
+                </option>
+                <option value={`${CharacterSelectEnum.HelloKitty}`}>
+                  {CharacterSelectEnum.HelloKitty}
+                </option>
+                <option value={`${CharacterSelectEnum.BugsBunny}`}>
+                  {CharacterSelectEnum.BugsBunny}
+                </option>
+              </select>
             </div>
 
             <div className="form-control mb-4">
