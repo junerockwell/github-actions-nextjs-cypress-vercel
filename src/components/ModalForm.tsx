@@ -164,11 +164,17 @@ export default function ModalForm(props: ModalFormType) {
                 })}
               ></textarea>
               {errors.description && (
-                <FormErrorText text="Description is required" />
+                <FormErrorText
+                  text="Description is required"
+                  cypressId="description-field-require-error"
+                />
               )}
               {errors.description &&
                 errors.description.type === "minLength" && (
-                  <FormErrorText text="Min 3 chars long" />
+                  <FormErrorText
+                    text="Min 3 chars long"
+                    cypressId="description-field-minlen-error"
+                  />
                 )}
             </div>
 
