@@ -10,8 +10,9 @@ describe("Modal Form", () => {
   it("opens successfully", () => {
     cy.visit("/");
     cy.getBySel("launch-modal").click();
+    cy.wait(3000); // important
     cy.getBySel("modal-with-form").should("be.visible");
-    cy.wait(3000);
+    cy.wait(1000);
   });
 
   it("close button closes the mdoal", () => {
