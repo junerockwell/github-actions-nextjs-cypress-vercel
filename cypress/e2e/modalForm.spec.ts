@@ -107,4 +107,35 @@ describe("Modal Form", () => {
     cy.getBySel("selectOne-field").select(3).should("have.value", "Bugs Bunny");
   });
 
+  it("multiple select dropdown selects one default", () => {
+    cy.visit("/");
+    cy.getBySel("launch-modal").click();
+    cy.getBySel("modal-with-form").should("be.visible");
+    cy.getBySel("selectMore-field").invoke("val").should("deep.equal", []);
+  });
+
+  it("multiple select dropdown selects more than one", () => {
+    cy.visit("/");
+    cy.getBySel("launch-modal").click();
+    cy.getBySel("modal-with-form").should("be.visible");
+    cy.getBySel("selectMore-field")
+      .select([1, 2])
+      .invoke("val")
+      .should("deep.equal", ["Snoopy", "Hello Kitty"]);
+    cy.wait(1000);
+    cy.getBySel("selectMore-field")
+      .select([1, 2, 3])
+      .invoke("val")
+      .should("deep.equal", ["Snoopy", "Hello Kitty", "Bugs Bunny"]);
+    cy.wait(1000);
+    cy.getBySel("selectMore-field")
+      .select([1, 3])
+      .invoke("val")
+      .should("deep.equal", ["Snoopy", "Bugs Bunny"]);
+    cy.wait(1000);
+    cy.getBySel("selectMore-field")
+      .select([3, 2])
+      .invoke("val")
+      .should("deep.equal", ["Hello Kitty", "Bugs Bunny"]);
+  });
 });
