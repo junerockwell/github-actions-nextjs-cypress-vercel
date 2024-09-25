@@ -138,4 +138,23 @@ describe("Modal Form", () => {
       .invoke("val")
       .should("deep.equal", ["Hello Kitty", "Bugs Bunny"]);
   });
+
+  it("default checked switch field", () => {
+    cy.visit("/");
+    cy.getBySel("launch-modal").click();
+    cy.getBySel("modal-with-form").should("be.visible");
+    cy.getBySel("switch-field").find("input").should("be.checked");
+  });
+
+  it("toggles switch field", () => {
+    cy.visit("/");
+    cy.getBySel("launch-modal").click();
+    cy.getBySel("modal-with-form").should("be.visible");
+    cy.getBySel("switch-field").find("input").uncheck();
+    cy.wait(2000);
+    cy.getBySel("switch-field").find("input").check();
+    cy.wait(2000);
+    cy.getBySel("switch-field").find("input").uncheck();
+    cy.wait(1000);
+  });
 });
