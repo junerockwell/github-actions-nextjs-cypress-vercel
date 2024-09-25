@@ -86,4 +86,25 @@ describe("Modal Form", () => {
     // cy.getBySel("checkMe-field").check({ force: true });
     cy.wait(1000);
   });
+
+  it("single select dropdown selects by default", () => {
+    cy.visit("/");
+    cy.getBySel("launch-modal").click();
+    cy.getBySel("modal-with-form").should("be.visible");
+    cy.getBySel("selectOne-field").should("have.value", null);
+  });
+
+  it("single select dropdown selects by one", () => {
+    cy.visit("/");
+    cy.getBySel("launch-modal").click();
+    cy.getBySel("modal-with-form").should("be.visible");
+    cy.getBySel("selectOne-field").select(1).should("have.value", "Snoopy");
+    cy.wait(1000);
+    cy.getBySel("selectOne-field")
+      .select(2)
+      .should("have.value", "Hello Kitty");
+    cy.wait(1000);
+    cy.getBySel("selectOne-field").select(3).should("have.value", "Bugs Bunny");
+  });
+
 });
