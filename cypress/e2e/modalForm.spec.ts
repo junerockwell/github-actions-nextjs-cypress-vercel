@@ -42,6 +42,21 @@ describe("Modal Form", () => {
       .and("have.text", "Name is required");
   });
 
+  it("shows name error minLength", () => {
+    cy.visit("/");
+    cy.getBySel("launch-modal").click();
+    cy.getBySel("modal-with-form").should("be.visible");
+    cy.getBySel("name-field").type("J");
+    cy.getBySel("name-field-minlen-error")
+      .should("be.visible")
+      .and("have.text", "Min length is 2");
+
+    cy.getBySel("name-field").type("John Mark Luke Matthew");
+    cy.getBySel("name-field-maxlen-error")
+      .should("be.visible")
+      .and("have.text", "Max length 20 exceeded");
+  });
+
   it("can type an email", () => {
     cy.visit("/");
     cy.getBySel("launch-modal").click();
