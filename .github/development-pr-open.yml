@@ -1,13 +1,13 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: Main Branch PR or Push
+name: Dev Branch PR or Push
 
 on:
   push:
-    branches: [main]
+    branches: [dev]
   pull_request:
-    branches: [main]
+    branches: [dev]
     types: [opened, reopened, synchronize]
 
 jobs:
@@ -136,12 +136,9 @@ jobs:
   deploy-preview:
     needs: e2e-cypress-only
     if: github.event.pull_request.merged == false
-    uses: ./.github/workflows/reusable-preview-pr-open.yml
+    uses: ./.github/workflows/preview-pr-open.yml
     secrets: inherit # needs this whenever we use reusables otherwise secrets won't work
 
-  deploy-prod:
-    needs: e2e-cypress-only
-    if: github.event.pull_request.merged == true
-    uses: ./.github/workflows/reusable-deploy-prod.yml
-    secrets: inherit # needs this whenever we use reusables otherwise secrets won't work
 
+  # how to make a version to build for dev branch
+  # deploy-dev:
