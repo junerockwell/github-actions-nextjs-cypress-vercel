@@ -281,7 +281,7 @@ export default function ModalForm(props: ModalFormType) {
             <div className="form-control mb-4" data-test="radio-choices-field">
               <p>
                 Which Topo Chico:
-                {/* <span className="required-mark">*</span> */}
+                <span className="required-mark">*</span>
               </p>
               <label className="label cursor-pointer justify-start px-0">
                 <input
