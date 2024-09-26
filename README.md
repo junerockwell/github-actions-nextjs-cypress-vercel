@@ -80,6 +80,14 @@ VERCEL_ORG_ID
 VERCEL_PROJECT_ID
 ```
 
+## GitHub Actions
+
+Have all the GitHub action jobs. Have a resuable YAML file that has the code to deploy to preview or to production on Vercel. This file will be triggered after all the previous required checks passed. Since we turned off the auto deploy for this project in Vercel, the resuable YAML file will make the deployment.
+
+### Preview link
+
+The preview link will be generated in the GitHub Actions check logs. You'd have to go to page click the preview. Unfortunately as of now, there's now way to make the fancy and convenient bar have the link that the Vercel Auto Deploy does.
+
 ## Setup Cypress
 
 ### Install Cypress
