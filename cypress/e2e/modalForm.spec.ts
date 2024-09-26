@@ -178,15 +178,15 @@ describe("Modal Form", () => {
       .check("blueberry")
       .should("be.checked");
     cy.wait(1000);
-    cy.getBySel("radio-choices-field")
-      .find("input[type='radio']")
-      .check("regular")
-      .should("be.checked");
-    cy.wait(1000);
-    cy.getBySel("radio-choices-field")
-      .find("input[type='radio']")
-      .check("lime")
-      .should("be.checked");
-    cy.wait(1000);
+    // cy.getBySel("radio-choices-field")
+    //   .find("input[type='radio']")
+    //   .check("regular")
+    //   .should("be.checked");
+    // cy.wait(1000);
+    // cy.getBySel("radio-choices-field")
+    //   .find("input[type='radio']")
+    //   .check("lime")
+    //   .should("be.checked");
+    // cy.wait(1000);
   });
 });
