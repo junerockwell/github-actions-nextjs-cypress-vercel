@@ -86,7 +86,7 @@ Have all the GitHub action jobs. Have a resuable YAML file that has the code to 
 
 ### Preview link
 
-The preview link will be generated in the GitHub Actions check logs. You'd have to go to page click the preview. Unfortunately as of now, there's now way to make the fancy and convenient bar have the link that the Vercel Auto Deploy does.
+The preview link will be generated in the GitHub Actions check logs. You'd have to go to page to get the preview link that was generated. Unfortunately as of now, there's now way to make the fancy and convenient bar have the link that the Vercel Auto Deploy does.
 
 ## Setup Cypress
 
