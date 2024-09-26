@@ -15,6 +15,12 @@ export enum CharacterSelectEnum {
   BugsBunny = "Bugs Bunny",
 }
 
+enum TopoChicoFlavor {
+  Regular = "regular",
+  Lime = "lime",
+  Blueberry = "blueberry",
+}
+
 interface IFormInput {
   name: string;
   email: string;
@@ -23,7 +29,7 @@ interface IFormInput {
   selectOne: CharacterSelectEnum;
   selectMore: CharacterSelectEnum;
   switch: boolean;
-  topoChicoFlavor: string;
+  topoChicoFlavor: TopoChicoFlavor;
 }
 
 export default function ModalForm(props: ModalFormType) {
@@ -105,18 +111,21 @@ export default function ModalForm(props: ModalFormType) {
             className="w-full"
             onSubmit={handleSubmit(onSubmit)}
           >
-            <div className="form-control mb-4">
+            <div className="form-control mb-4" data-test="name-field">
               <input
                 type="text"
                 placeholder="name"
                 className="input input-bordered w-full mb-2"
                 {...register("name", {
-                  required: true,
+                  required: {
+                    value: true,
+                    message: "Name is Required",
+                  },
                   minLength: 2,
                   maxLength: 20,
                 })}
-                data-test="name-field"
               />
+              {errors.name && <p>{errors.name.message}</p>}
               {errors.name && errors.name.type === "required" && (
                 <FormErrorText
                   text="Name is required"
@@ -269,17 +278,18 @@ export default function ModalForm(props: ModalFormType) {
               )}
             </div>
 
-            <div className="form-control mb-4">
+            <div className="form-control mb-4" data-test="radio-choices-field">
               <p>
-                Which Topo Chico:<span className="required-mark">*</span>
+                Which Topo Chico:
+                {/* <span className="required-mark">*</span> */}
               </p>
               <label className="label cursor-pointer justify-start px-0">
                 <input
                   type="radio"
                   className="radio checked:bg-red-500 mr-2"
-                  // defaultChecked
-                  value="regular"
-                  {...register("topoChicoFlavor", {
+                  value={TopoChicoFlavor.Regular}
+                  {...(register("topoChicoFlavor"),
+                  {
                     required: true,
                   })}
                 />
@@ -290,8 +300,9 @@ export default function ModalForm(props: ModalFormType) {
                 <input
                   type="radio"
                   className="radio checked:bg-green-500 mr-2"
-                  value="lime"
-                  {...register("topoChicoFlavor", {
+                  value={TopoChicoFlavor.Lime}
+                  {...(register("topoChicoFlavor"),
+                  {
                     required: true,
                   })}
                 />
@@ -302,15 +313,14 @@ export default function ModalForm(props: ModalFormType) {
                 <input
                   type="radio"
                   className="radio checked:bg-blue-500 mr-2"
-                  value="blueberry"
-                  {...register("topoChicoFlavor", {
+                  value={TopoChicoFlavor.Blueberry}
+                  {...(register("topoChicoFlavor"),
+                  {
                     required: true,
                   })}
                 />
                 <span className="label-text">Blueberry</span>
               </label>
-
-              {errors.topoChicoFlavor && <FormErrorText text="Required" />}
             </div>
 
             <button
