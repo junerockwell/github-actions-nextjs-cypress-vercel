@@ -44,11 +44,41 @@ None of these commands will be used in the GitHub actions if `cypress-io/github-
 
 ## Deploy on Vercel
 
+The following steps overwrites or cancels the auto deploy on Vercel. Because, we want all the GitHub Actions checks to pass first before a deploy happens. If don't cancel the Vercel auto-deploy, then there's just gonna be a deployment to Vercel no matter what.
+
 ### Add this project in Vercel
 
 Import this repo in Vercel.
 
-###
+### Vercel CLI
+
+```bash
+vercel login
+```
+
+Link this app to Vercel
+
+```bash
+vercel
+```
+
+Follow all the prompts.
+
+A `.vercel` folder with a `project.json` inside should generated. The `project.json` should have the `projectId` and `orgId`.
+
+### Generate a token (if you already haven't)
+
+Go the Vercel website. Login to your account. And generate a token.
+
+### Save the as GitHub Secrets
+
+The following variables should be saved as GitHub secrets.
+
+```bash
+VERCEL_TOKEN
+VERCEL_ORG_ID
+VERCEL_PROJECT_ID
+```
 
 ## Setup Cypress
 
