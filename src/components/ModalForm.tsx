@@ -288,8 +288,7 @@ export default function ModalForm(props: ModalFormType) {
                   type="radio"
                   className="radio checked:bg-red-500 mr-2"
                   value={TopoChicoFlavor.Regular}
-                  {...(register("topoChicoFlavor"),
-                  {
+                  {...register("topoChicoFlavor", {
                     required: true,
                   })}
                 />
@@ -301,8 +300,7 @@ export default function ModalForm(props: ModalFormType) {
                   type="radio"
                   className="radio checked:bg-green-500 mr-2"
                   value={TopoChicoFlavor.Lime}
-                  {...(register("topoChicoFlavor"),
-                  {
+                  {...register("topoChicoFlavor", {
                     required: true,
                   })}
                 />
@@ -314,8 +312,7 @@ export default function ModalForm(props: ModalFormType) {
                   type="radio"
                   className="radio checked:bg-blue-500 mr-2"
                   value={TopoChicoFlavor.Blueberry}
-                  {...(register("topoChicoFlavor"),
-                  {
+                  {...register("topoChicoFlavor", {
                     required: true,
                   })}
                 />
