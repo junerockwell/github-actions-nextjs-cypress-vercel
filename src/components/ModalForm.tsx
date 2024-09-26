@@ -285,33 +285,39 @@ export default function ModalForm(props: ModalFormType) {
               </p>
               <label className="label cursor-pointer justify-start px-0">
                 <input
-                  required
                   type="radio"
                   className="radio checked:bg-red-500 mr-2"
                   value={TopoChicoFlavor.Regular}
-                  {...register("topoChicoFlavor")}
+                  {...(register("topoChicoFlavor"),
+                  {
+                    required: true,
+                  })}
                 />
                 <span className="label-text">Regular</span>
               </label>
 
               <label className="label cursor-pointer justify-start px-0">
                 <input
-                  required
                   type="radio"
                   className="radio checked:bg-green-500 mr-2"
                   value={TopoChicoFlavor.Lime}
-                  {...register("topoChicoFlavor")}
+                  {...(register("topoChicoFlavor"),
+                  {
+                    required: true,
+                  })}
                 />
                 <span className="label-text">Lime</span>
               </label>
 
               <label className="label cursor-pointer justify-start px-0">
                 <input
-                  required
                   type="radio"
                   className="radio checked:bg-blue-500 mr-2"
                   value={TopoChicoFlavor.Blueberry}
-                  {...register("topoChicoFlavor")}
+                  {...(register("topoChicoFlavor"),
+                  {
+                    required: true,
+                  })}
                 />
                 <span className="label-text">Blueberry</span>
               </label>
