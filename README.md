@@ -40,15 +40,53 @@ The following command runs the e2e test on the terminal only.
 npm run cy:run
 ```
 
-None of these commands will be used in the GitHub actions if `cypress-io/github-action@v6` is used because `cypress-io/github-action@v6` does it for you.
+None of these commands will be used in the GitHub actions if `cypress-io/github-action@v6` is used because `cypress-io/github-action@v6` does all for you.
 
 ## Deploy on Vercel
+
+The following steps overwrites or cancels the auto deploy on Vercel. Because, we want all the GitHub Actions checks to pass first before a deploy happens. If don't cancel the Vercel auto-deploy, then there's just gonna be a deployment to Vercel no matter what.
 
 ### Add this project in Vercel
 
 Import this repo in Vercel.
 
-###
+### Vercel CLI
+
+```bash
+vercel login
+```
+
+Link this app to Vercel
+
+```bash
+vercel
+```
+
+Follow all the prompts.
+
+A `.vercel` folder with a `project.json` inside should generated. The `project.json` should have the `projectId` and `orgId`.
+
+### Generate a token (if you already haven't)
+
+Go the Vercel website. Login to your account. And generate a token.
+
+### Save the as GitHub Secrets
+
+The following variables should be saved as GitHub secrets.
+
+```bash
+VERCEL_TOKEN
+VERCEL_ORG_ID
+VERCEL_PROJECT_ID
+```
+
+## GitHub Actions
+
+Have all the GitHub action jobs. Have a resuable YAML file that has the code to deploy to preview or to production on Vercel. This file will be triggered after all the previous required checks passed. Since we turned off the auto deploy for this project in Vercel, the resuable YAML file will make the deployment.
+
+### Preview link
+
+The preview link will be generated in the GitHub Actions check logs. You'd have to go to page to get the preview link that was generated. Unfortunately as of now, there's now way to make the fancy and convenient bar have the link that the Vercel Auto Deploy does.
 
 ## Setup Cypress
 

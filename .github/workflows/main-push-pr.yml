@@ -1,0 +1,147 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Main Branch PR or Push
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+    types: [opened, reopened, synchronize]
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: true
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/iron
+          cache: "npm"
+
+      - name: Clear Install Dependecies
+        run: npm ci
+
+  build:
+    needs: install
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: true
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/iron
+          cache: "npm"
+
+      - name: Clear Install Dependecies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+  lint:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: true
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/iron
+
+      - name: Clear Install Dependecies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Lint
+        run: npm run lint
+
+  # e2e-install-all-deps-with-cypress:
+  #   needs: lint
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v4
+
+  #     - name: Install dependencies
+  #       uses: cypress-io/github-action@v6
+  #       with:
+  #         # just perform install
+  #         runTests: false
+
+  #     # - name: Lint
+  #     #   run: npm run lint
+
+  #     - name: Run e2e tests
+  #       uses: cypress-io/github-action@v6
+  #       with:
+  #         # we have already installed all dependencies above
+  #         install: false
+  #         build: npm run build
+  #         start: npm start
+  #         wait-on: http://localhost:3000
+  #         # Custom: Cypress tests and config file are in "e2e" folder
+  #         # working-directory: e2e
+
+  e2e-cypress-only:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/Cypress
+            node_modules
+          key: my-cache-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
+      - name: Install Cypress only
+        run: npm i cypress
+
+      - name: Run e2e tests
+        uses: cypress-io/github-action@v6
+        with:
+          # we have already installed all dependencies above
+          install: false
+          build: npm run build
+          start: npm start
+          wait-on: http://localhost:3000
+          # Custom: Cypress tests and config file are in "e2e" folder
+          # working-directory: e2e
+
+  deploy-preview:
+    needs: e2e-cypress-only
+    if: github.event.pull_request.merged == false
+    uses: ./.github/workflows/reusable-preview-pr-open.yml
+    secrets: inherit # needs this whenever we use reusables otherwise secrets won't work
+
+  deploy-prod:
+    needs: e2e-cypress-only
+    if: github.event.pull_request.merged == true
+    uses: ./.github/workflows/reusable-deploy-prod.yml
+    secrets: inherit # needs this whenever we use reusables otherwise secrets won't work
+
