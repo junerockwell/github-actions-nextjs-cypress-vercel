@@ -40,7 +40,7 @@ The following command runs the e2e test on the terminal only.
 npm run cy:run
 ```
 
-None of these commands will be used in the GitHub actions if `cypress-io/github-action@v6` is used because `cypress-io/github-action@v6` does it for you.
+None of these commands will be used in the GitHub actions if `cypress-io/github-action@v6` is used because `cypress-io/github-action@v6` does all for you.
 
 ## Deploy on Vercel
 
